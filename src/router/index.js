@@ -38,6 +38,20 @@ export const constantRoutes = [
   // 以上是不显示在侧边栏的路由
 
   {
+    path: '/',
+    component:Layout,
+    redirect: '/dashboard',
+    children: [
+      {
+        path: 'dashboard',
+        component: ()=> import('@/views/dashboard/index'),
+        name: 'Dashboard',
+        meta:{title:'Dashboard',icon:'dashboard',affix:true},
+      }
+    ]
+  },
+
+  {
     path:'/',
     component:Index,
     hidden:false
