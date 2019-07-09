@@ -5,12 +5,9 @@ Vue.use(Router)
 
 import Layout from '@/layout'
 
-import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
-import tableRouter from './modules/table'
-import nestedRouter from './modules/nested'
+import officeRouter  from './modules/office'
 
-// constantRoutes： 代表那些不需要动态判断权限的路由，如登录页、404、等通用页面。
+// constantRoutes： 那些基础的页面，所有角色都可以访问
 export const constantRoutes = [
   {
     path: '/redirect',
@@ -18,25 +15,25 @@ export const constantRoutes = [
     hidden: true,
     children: [
       {
-        // param方式传递路由参数
+        // params方式传递路由参数
         path: '/redirect/:path*',
         // 这种写法是路由懒加载  const Foo = () => import('./Foo.vue')   import返回promise对象
         component:() => import('@/views/redirect/index')
       }
     ]
   },
-  {
-    path:'/login',
-    component:()=> import('@views/login/index'),
-    hidden:true
-  },
-  {
-    path:'/404',
-    component:()=> import('@views/error-page/404'),
-    hidden:true
-  },
+  // {
+  //   path:'/login',
+  //   component:()=> import('@views/login/index'),
+  //   hidden:true
+  // },
+  // {
+  //   path:'/404',
+  //   component:()=> import('@views/error-page/404'),
+  //   hidden:true
+  // },
   // 以上是不显示在侧边栏的路由
-
+  // 首页
   {
     path: '/',
     component:Layout,
@@ -50,10 +47,26 @@ export const constantRoutes = [
       }
     ]
   },
-
-  {
-    path:'/',
-    component:Index,
-    hidden:false
-  },
 ]
+
+// 需要一定的角色才能访问的路由
+export const asyncRoutes = [
+  officeRouter 
+]
+
+const createRouter = () => new Router({
+  // mode: 'history', // require service support
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRoutes
+})
+
+const router = createRouter()
+
+// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+export function resetRouter() {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
+}
+
+export default router
+

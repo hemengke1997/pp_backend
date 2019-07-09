@@ -68,14 +68,24 @@ module.exports = {
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
       },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader', 'sass-loader']
-      },
-      {
-        test: /\.scss$/,
-        loaders: ['style', 'css', 'sass']
-      }
+
+      // build/utils.js中已经配置了样式相关的loader了 （vue-cli自动配置的），这里再配置会重复， 报错
+
+      // {
+      //   test: /\.scss$/,
+      //   loader: 'sass-loader'
+      // },
+      // {
+      //   test: /\.css$/,
+      //   use: ['style-loader', 'css-loader', 'sass-loader']
+      // },
+      // {
+      //   test: /\.css$/,
+      //   loader: ['style-loader', 'css-loader'],
+      //   exclude: /node_modules/
+      // },
+      
+
     ]
   },
   node: {

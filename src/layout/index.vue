@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components'
+import { AppMain, Navbar, Sidebar, TagsView } from './components'
 export default {
     
 }
