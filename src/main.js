@@ -4,11 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Cookies from 'js-cookies'
-
-
 import ElementUI from 'element-ui';
-
-
+import 'normalize.css/normalize.css'
+// import 'element-ui/lib/theme-chalk/index.css';
+import './styles/element-variables.scss'
+import './styles/index.scss' // global css
+import './icons'
 Vue.use(ElementUI)
 Vue.use(Cookies)
 

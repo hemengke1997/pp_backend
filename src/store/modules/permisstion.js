@@ -1,7 +1,5 @@
-import { constantRoutes,asyncRoutes } from '@/router'
+import Layout from '@/layout'
 
-function hasPermission(roles, route) {
-    if(route.meta && route.meta.roles) {
-        return roles.some(role=> )
-    }
-}
+// const permissionRouter = {
+//     path:''
+// }

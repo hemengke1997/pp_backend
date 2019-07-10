@@ -34,19 +34,23 @@ export const constantRoutes = [
   // },
   // 以上是不显示在侧边栏的路由
   // 首页
+  // {
+  //   path: '/',
+  //   component:Layout,
+  //   redirect: '/dashboard',
+  //   children: [
+  //     {
+  //       path: 'dashboard',
+  //       component: ()=> import('@/views/dashboard/index'),
+  //       name: 'Dashboard',
+  //       meta:{title:'Dashboard',icon:'dashboard',affix:true},
+  //     }
+  //   ]
+  // },
   {
-    path: '/',
+    path:'/',
     component:Layout,
-    redirect: '/dashboard',
-    children: [
-      {
-        path: 'dashboard',
-        component: ()=> import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta:{title:'Dashboard',icon:'dashboard',affix:true},
-      }
-    ]
-  },
+  }
 ]
 
 // 需要一定的角色才能访问的路由

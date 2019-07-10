@@ -47,6 +47,7 @@ module.exports = {
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
+        exclude: [resolve('src/icons')],
         options: {
           limit: 10000,
           name: utils.assetsPath('img/[name].[hash:7].[ext]')
@@ -68,7 +69,14 @@ module.exports = {
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
       },
-
+      {
+        test: /\.svg$/,
+        loader: 'svg-sprite-loader',
+        include: [resolve('src/icons')],
+        options: {
+          symbolId: 'icon-[name]'
+        }
+      }
       // build/utils.js中已经配置了样式相关的loader了 （vue-cli自动配置的），这里再配置会重复， 报错
 
       // {
@@ -84,8 +92,6 @@ module.exports = {
       //   loader: ['style-loader', 'css-loader'],
       //   exclude: /node_modules/
       // },
-      
-
     ]
   },
   node: {

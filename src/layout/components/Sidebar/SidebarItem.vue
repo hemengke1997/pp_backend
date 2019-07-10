@@ -1,9 +1,9 @@
 <template>
-  <div class="menu-wrapper">
+  <div class="nest-menu">
     <el-submenu index="1">
       <template slot="title">
         <el-menu-item>
-          <i class="el-icon-s-grid"></i>
+          <svg-icon class-name="dashboard-icon" icon-class="dashboard"></svg-icon>
           <span>官网管理</span>
         </el-menu-item>
       </template>
@@ -42,20 +42,21 @@
 <script>
 export default {
   mounted(){
-    console.log(this.$route,"route")
-    console.log(this.$router,"router")
-    this.$router.push({
-      query:{
-        id:1111,
-        name:'xxxx'
-      }
-    })
-    const {params,query} = this.$route
-    const {path} = params
-    console.log(params,"params")
-    console.log(query,'query')
-    console.log(path,'path')
+    // console.log(this.$route,"route")
+    // console.log(this.$router,"router")
+    // this.$router.push({
+    //   query:{
+    //     id:1111,
+    //     name:'xxxx'
+    //   }
+    // })
+    // const {params,query} = this.$route
+    // const {path} = params
+    // console.log(params,"params")
+    // console.log(query,'query')
+    // console.log(path,'path')
     // this.$router.replace({ path: '/' + path, query:query })
+
   }
 };
 </script>

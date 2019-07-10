@@ -9,7 +9,7 @@
         :active-text-color="variables.menuActiveText"
         mode="vertical"
       >
-        <sidebar-item v-for="route in all_routes" :key="route.path" :item="route" :base-path="route.path"></sidebar-item>
+        <sidebar-item></sidebar-item>
       </el-menu>
     </el-scrollbar>
   </div>
@@ -38,5 +38,7 @@ export default {
 
 </script>
 <style lang="scss" scoped>
-
+.sidebar-container {
+  height: 100%;
+}
 </style>
