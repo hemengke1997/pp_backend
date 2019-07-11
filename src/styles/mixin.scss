@@ -1,3 +1,4 @@
+// @mixin指令可以简化代码 增加复用性 通过@mixin+名称  可以定义一个mixins模块 ，在这个模块中可以添加任何想重复使用的样式  通过@include + 名称 来调用这个模块
 @mixin clearfix {
     &:after {
       content: "";
@@ -27,8 +28,8 @@
     height: 100%;
   }
   
-  @mixin pct($pct) {
-    width: #{$pct};
+  @mixin pct($pct) {  // 定义变量 $
+    width: #{$pct};  //插值语法  #{}
     position: relative;
     margin: 0 auto;
   }

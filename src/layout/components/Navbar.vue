@@ -1,6 +1,6 @@
 <template>
   <div class="navbar">
-    <div id="hamburger-container" class="hamburger-container">
+    <div id="hamburger-container" class="hamburger-container" style="    padding: 0 15px;">
       <svg
         :class="{'is-active':isActive}"
         class="hamburger"

@@ -1,20 +1,28 @@
 <template>
     <section class="app-main">
+      <!--  transition mode有两个值 out-in  in-out  
+            其中 out-in ：当前元素先进行过渡，完成后新元素过渡进入
+            in-out: 新元素先进行过渡，完成之后当前元素过渡离开
+       -->
         <transition name="fade-transform" mode="out-in">
+
             <!-- 这里在 app-main 外部包了一层 keep-alive 主要是为了缓存 <router-view> 的，配合页面的 tabs-view 标签导航使用 -->
-            <keep-alive>
+            <!-- <keep-alive> -->
                 <!-- 这里的key 是为了保证唯一性，保证不同的页面 key值不同
                     或许几个页面使用的相同组件 但是他们的key不同
                  -->
-                <router-view></router-view>
-            </keep-alive>
+                <!-- <router-view></router-view> -->
+            <!-- </keep-alive> -->
+          <recommend-content></recommend-content>
         </transition>
     </section>
 </template>
 
 <script>
+import RecommendContent from '@/views/office/recommend/content';
 export default {
-    name:'AppMain'
+    name:'AppMain',
+    components:{RecommendContent}
 }
 </script>
 
