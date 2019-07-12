@@ -13,16 +13,21 @@
                  -->
                 <!-- <router-view></router-view> -->
             <!-- </keep-alive> -->
-          <recommend-content></recommend-content>
+          <!-- <recommend-content></recommend-content> -->
+          <!-- <recommend-type/> -->
+          <news-content/>
         </transition>
     </section>
 </template>
 
 <script>
 import RecommendContent from '@/views/office/recommend/content';
+import RecommendType from '@/views/office/recommend/type'
+import NewsType from '@/views/office/postnews/newstype'
+import NewsContent from '@/views/office/postnews/newscontent'
 export default {
     name:'AppMain',
-    components:{RecommendContent}
+    components:{RecommendContent,RecommendType,NewsType,NewsContent}
 }
 </script>
 

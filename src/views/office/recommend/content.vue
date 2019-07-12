@@ -33,10 +33,10 @@
     </el-table>
 
     <Pagination :total="10" />
+    
     <el-dialog
       :title="dialogStatus==='create' ? '添加推荐':'修改推荐'"
       :visible.sync="dialogVisible"
-      close-on-press-escape
       :close-on-click-modal="false"
       :center="true"
       width="30%"
@@ -66,10 +66,10 @@
           <el-input v-model="form.sort" type="number"></el-input>
         </el-form-item>
       </el-form>
-      <span slot="footer" class="dialog-footer">
+      <template v-slot:footer class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-      </span>
+      </template>
     </el-dialog>
   </div>
 </template>
