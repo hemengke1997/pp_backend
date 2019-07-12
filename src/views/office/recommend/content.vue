@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button type="primary" class="filter-item" plain icon="el-icon-plus">添加</el-button>
+      <el-button type="primary" class="filter-item" plain icon="el-icon-plus" @click="handleCreate">添加</el-button>
       <el-button
         type="primary"
         class="filter-item"
@@ -26,24 +26,22 @@
       <el-table-column prop="address" label="对应ID"></el-table-column>
       <el-table-column prop="address" label="对应图片"></el-table-column>
       <el-table-column prop="address" label="排序" sortable></el-table-column>
-      <el-table-column label="操作" class-name="small-padding fixed-width" align="center">
-        <template>
-          <el-button size="mini" type="primary" @click="handleUpdate">详细</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete">删除</el-button>
-        </template>
+      <el-table-column label="操作" class-name="small-padding fixed-width" align="center" v-slot="scope">
+          <el-button size="mini" type="primary" @click="handleUpdate(scope.$index,scope.row)">详细</el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(scope.$index,scope.row)">删除</el-button>
       </el-table-column>
     </el-table>
 
     <Pagination :total="10" />
     <el-dialog
-      title="修改推荐"
+      :title="dialogStatus==='create' ? '添加推荐':'修改推荐'"
       :visible.sync="dialogVisible"
       close-on-press-escape
       :close-on-click-modal="false"
       :center="true"
       width="30%"
     >
-      <el-form :model="form" ref="dataForm" :rules="rules" :label-position="right">
+      <el-form :model="form" ref="dataForm" :rules="rules" label-position="right" label-width="150px">
         <el-form-item label="所属推荐位" prop="recommend">
           <el-select v-model="form.position">
             <el-option label="热门商品" value="hot"></el-option>
@@ -61,11 +59,11 @@
             <el-option label="公告内容" value="7"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="对应表id" prop="tableID">
+        <el-form-item label="对应表id" prop="id" style="width:80%">
           <el-input v-model="form.id"></el-input>
         </el-form-item>
-        <el-form-item label="排序(从大到小)" prop="sort">
-          <el-input v-model="form.sort"></el-input>
+        <el-form-item label="排序(从大到小)" prop="sort" style="width:80%">
+          <el-input v-model="form.sort" type="number"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -112,24 +110,38 @@ export default {
         sort: 0
       },
       rules:{
-          recommend:[{required:true,trigger:'blur'}],
-          type: [{required:true,trigger:'blur'}],
-          tableID:[{required:true,message:'请输入对应表ID!',trigger:'change'}],
+          recommend:[{required:true,trigger:'change'}],
+          type: [{required:true,trigger:'change'}],
+          id:[{required:true,message:'请输入对应表ID!',trigger:'change'}],
           sort:[{required:true,message:'请输入排序数字!',trigger:'change'}]
       },
       tableKey: 0,
       listLoading: false,
-      dialogVisible: false
+      dialogVisible: false,
+      dialogStatus:'create'  //添加记录
     };
   },
   methods: {
     handleUpdate() {
       this.dialogVisible = true;
+      this.dialogStatus = 'add'
     },
-    handleDelete() {},
+    handleDelete(index,row) {
+      this.$confirm('确认删除?').then(()=>{
+        this.deleteData(row)
+      })
+    },
+    deleteData(index,row){
+      const tempData = Object.assign({},row)
+      this.list.splice(index,1)
+    },
     //   el-table自带的一个方法 当排序顺序改变的时候触发
-    sortChange() {}
-  }
+    sortChange() {},
+    handleCreate() {
+      this.dialogStatus = 'create'
+      this.dialogVisible = true
+    }
+  },
 };
 </script>
 
