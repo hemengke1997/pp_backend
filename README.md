@@ -23,4 +23,5 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 ---
 ### 开发过程中，发现vue2.6的slot有新的特性， 以前的scope被vue2.5的slot-scope替代，现在slot-scope又被v-slot代替了 slot也废弃了 用v-slot代替 
 [vue官网对插槽的介绍](https://cn.vuejs.org/v2/guide/components-slots.html)
+
 [vue官网对v-slot的介绍](https://cn.vuejs.org/v2/api/#v-slot)
