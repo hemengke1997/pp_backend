@@ -114,6 +114,9 @@ export default {
         sortChange(){
 
         }
-    }
+    },
+    mounted() {
+    console.log(this)
+  }
 }
 </script>

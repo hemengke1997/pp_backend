@@ -49,6 +49,8 @@
         v-slot="scope"
       >
         <el-button size="mini" type="primary" @click="handleUpdate(scope.$index,scope.row)">详细</el-button>
+        <el-button size="mini" type="success" v-if="!contentStatus">发布</el-button>
+        <el-button size="mini" type="warning" v-else>下线</el-button>
         <el-button size="mini" type="danger" @click="handleDelete(scope.$index,scope.row)">删除</el-button>
       </el-table-column>
     </el-table>
@@ -133,7 +135,8 @@ export default {
       tableKey: 0,
       listLoading: false,
       dialogVisible: false,
-      dialogStatus: "create" //添加记录
+      dialogStatus: "create", //添加记录
+      contentStatus:false, // 新闻内容的状态（发布 下线） false代表待发布 true表示已发布（下线
     };
   },
   methods: {

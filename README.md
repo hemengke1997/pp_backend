@@ -27,9 +27,6 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 [vue官网对v-slot的介绍](https://cn.vuejs.org/v2/api/#v-slot)
 
 ---
-<<<<<<< HEAD
 ## Slot的通俗理解
 是“占坑”，在组件模板中占好了位置，当使用该组件标签时候，组件标签里面的内容就会自动填坑（替换组件模板中<slot>位置），当插槽也就是坑<slot name=”mySlot”>有命名时，组件标签中使用属性slot=”mySlot”的元素就会替换该对应位置内容；
-=======
 .sync修饰符  vue2.3重新加入的 用来修饰事件  在dialog中用到了这个修饰符   :visible.sync 情况如下：dialog中有个slot footer 点击footer中的按钮时可以改变dialog的显示隐藏  点击dialog右上角的X也可以改变dialog的显示隐藏， 此时用.sync，就是当子组件改变了一个prop值时，这个变化也会同步到父组件中
->>>>>>> 162e06371da8cff16caccd3fccecfa37a6233143

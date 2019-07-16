@@ -14,7 +14,7 @@
         style="margin-left:50px"
         plain
         icon="el-icon-download"
-        :loading="true"
+        :loading="false"
       >导出为EXCEL</el-button>
     </div>
     <el-table
@@ -27,21 +27,7 @@
       @sort-change="sortChange"
     >
       <el-table-column prop="id" label="ID"></el-table-column>
-      <el-table-column prop="type" label="所属分类"></el-table-column>
-      <el-table-column prop="title" label="标题"></el-table-column>
-      <el-table-column label="封面图片" v-slot="scope">
-        <el-popover placement="right" trigger="click" v-if="scope.row.pic">
-          <el-image :src="scope.row.pic" style="height:30px" fit="contain" slot="reference">
-            <div class="image-slot" slot="error">
-              <i class="el-icon-picture-outline"></i>
-            </div>
-          </el-image>
-          <el-image :src="scope.row.pic"></el-image>
-        </el-popover>
-        <span v-else>暂无图片</span>
-      </el-table-column>
-      <el-table-column prop="itime" label="添加时间"></el-table-column>
-      <el-table-column prop="utime" label="更新时间"></el-table-column>
+      <el-table-column prop="tag" label="标签名称"></el-table-column>
       <el-table-column
         label="操作"
         class-name="small-padding fixed-width"
@@ -56,23 +42,22 @@
     <Pagination :total="10" />
 
     <el-dialog
-      :title="dialogStatus==='create' ? '添加类型':'修改类型'"
+      :title="dialogStatus==='create' ? '添加标签':'修改标签'"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false"
       :center="true"
-      width="26%"
-      top="250px"
+      width="380px"
+      top="200px"
     >
       <el-form
         :model="form"
         ref="dataForm"
         :rules="rules"
         label-position="right"
-        label-width="120px"
-        :status-icon="true"
+        label-width="95px"
       >
-        <el-form-item label="类型名称" prop="name" style="width:80%">
-          <el-input v-model="form.name"></el-input>
+        <el-form-item label="标签名称" prop="tag">
+            <el-input v-model="form.tag" style="width:190px"></el-input>
         </el-form-item>
       </el-form>
       <template v-slot:footer class="dialog-footer">
@@ -93,42 +78,23 @@ export default {
       list: [
         {
           id: 123456,
-          type: "攻略",
-          title: "1111",
-          pic: require("@/assets/logo.png"),
-          itime: 456456431325,
-          utime: 456123123121
+          tag:'111'
         },
         {
           id: 123456,
-          type: "攻略",
-          itime: 456456431325,
-          utime: 456123123121,
-          pic: require("@/assets/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png"),
-          title: "222"
+          tag:"测试分类2",
         },
         {
           id: 123456,
-          type: "攻略",
-          itime: 456456431325,
-          utime: 456123123121,
-          pic: "",
-          title: "222"
+          tag:"测试分类3",
         },
-        {
-          id: 123456,
-          type: "攻略",
-          itime: 456456431325,
-          utime: 456123123121,
-          pic: "",
-          title: "222"
-        }
       ],
       form: {
-        name: ""
+        id:undefined,
+        tag:'11'
       },
       rules: {
-        name: { required: true, message: "请输入类型名称", trigger: "blur" }
+        tag: { required: true, message: "请输入标签名称", trigger: "blur" }
       },
       tableKey: 0,
       listLoading: false,
@@ -155,7 +121,9 @@ export default {
     handleCreate() {
       this.dialogStatus = "create";
       this.dialogVisible = true;
-    }
+    },
+    //上传文件之前的钩子，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传。
+    beforeAvatarUpload(){}
   }
 };
 </script>

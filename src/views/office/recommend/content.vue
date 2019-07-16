@@ -142,6 +142,9 @@ export default {
       this.dialogVisible = true
     }
   },
+  mounted() {
+    console.log(this)
+  }
 };
 </script>
 

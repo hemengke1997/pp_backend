@@ -14,7 +14,7 @@
         style="margin-left:50px"
         plain
         icon="el-icon-download"
-        :loading="true"
+        :loading="false"
       >导出为EXCEL</el-button>
     </div>
     <el-table
@@ -27,21 +27,8 @@
       @sort-change="sortChange"
     >
       <el-table-column prop="id" label="ID"></el-table-column>
-      <el-table-column prop="type" label="所属分类"></el-table-column>
-      <el-table-column prop="title" label="标题"></el-table-column>
-      <el-table-column label="封面图片" v-slot="scope">
-        <el-popover placement="right" trigger="click" v-if="scope.row.pic">
-          <el-image :src="scope.row.pic" style="height:30px" fit="contain" slot="reference">
-            <div class="image-slot" slot="error">
-              <i class="el-icon-picture-outline"></i>
-            </div>
-          </el-image>
-          <el-image :src="scope.row.pic"></el-image>
-        </el-popover>
-        <span v-else>暂无图片</span>
-      </el-table-column>
-      <el-table-column prop="itime" label="添加时间"></el-table-column>
-      <el-table-column prop="utime" label="更新时间"></el-table-column>
+      <el-table-column prop="type" label="分类名称"></el-table-column>
+      <el-table-column prop="sort" label="排序"></el-table-column>
       <el-table-column
         label="操作"
         class-name="small-padding fixed-width"
@@ -56,23 +43,31 @@
     <Pagination :total="10" />
 
     <el-dialog
-      :title="dialogStatus==='create' ? '添加类型':'修改类型'"
+      :title="dialogStatus==='create' ? '添加分类':'修改分类'"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false"
       :center="true"
-      width="26%"
-      top="250px"
+      width="380px"
+      top="165px"
     >
       <el-form
         :model="form"
         ref="dataForm"
         :rules="rules"
         label-position="right"
-        label-width="120px"
-        :status-icon="true"
+        label-width="95px"
       >
-        <el-form-item label="类型名称" prop="name" style="width:80%">
-          <el-input v-model="form.name"></el-input>
+        <el-form-item label="所属分类">
+          <el-select v-model="form.type" placeholder="顶级分类" style="width:190px">
+              <el-option label="测试分类" value="1"></el-option>
+              <el-option label="测试分类" value="2"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="分类名称" prop="type">
+            <el-input v-model="form.type" style="width:190px"></el-input>
+        </el-form-item>
+        <el-form-item label="排序" prop="sort">
+            <el-input v-model="form.sort" type="number" style="width:190px"></el-input>
         </el-form-item>
       </el-form>
       <template v-slot:footer class="dialog-footer">
@@ -93,42 +88,33 @@ export default {
       list: [
         {
           id: 123456,
-          type: "攻略",
-          title: "1111",
-          pic: require("@/assets/logo.png"),
-          itime: 456456431325,
-          utime: 456123123121
+          type:"测试分类1",
+          sort:1
         },
         {
           id: 123456,
-          type: "攻略",
-          itime: 456456431325,
-          utime: 456123123121,
-          pic: require("@/assets/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png"),
-          title: "222"
+          type:"测试分类2",
+          sort:1,
         },
         {
           id: 123456,
-          type: "攻略",
-          itime: 456456431325,
-          utime: 456123123121,
-          pic: "",
-          title: "222"
+          type:"测试分类3",
+          sort:4
         },
         {
           id: 123456,
-          type: "攻略",
-          itime: 456456431325,
-          utime: 456123123121,
-          pic: "",
-          title: "222"
+          type:"测试分类4",
+          sort:1
         }
       ],
       form: {
-        name: ""
+        id:undefined,
+        type:'',
+        sort:undefined
       },
       rules: {
-        name: { required: true, message: "请输入类型名称", trigger: "blur" }
+        type: { required: true, message: "请输入分类名称", trigger: "blur" },
+        sort:{required:true,message:"请设置排序"}
       },
       tableKey: 0,
       listLoading: false,
@@ -155,7 +141,9 @@ export default {
     handleCreate() {
       this.dialogStatus = "create";
       this.dialogVisible = true;
-    }
+    },
+    //上传文件之前的钩子，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传。
+    beforeAvatarUpload(){}
   }
 };
 </script>

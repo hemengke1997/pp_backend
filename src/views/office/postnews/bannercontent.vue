@@ -14,7 +14,7 @@
         style="margin-left:50px"
         plain
         icon="el-icon-download"
-        :loading="true"
+        :loading="false"
       >导出为EXCEL</el-button>
     </div>
     <el-table
@@ -27,11 +27,10 @@
       @sort-change="sortChange"
     >
       <el-table-column prop="id" label="ID"></el-table-column>
-      <el-table-column prop="type" label="所属分类"></el-table-column>
-      <el-table-column prop="title" label="标题"></el-table-column>
+      <el-table-column prop="remarks" label="备注"></el-table-column>
       <el-table-column label="封面图片" v-slot="scope">
         <el-popover placement="right" trigger="click" v-if="scope.row.pic">
-          <el-image :src="scope.row.pic" style="height:30px" fit="contain" slot="reference">
+          <el-image :src="scope.row.pic" style="height:30px;width:240px" fit="contain" slot="reference">
             <div class="image-slot" slot="error">
               <i class="el-icon-picture-outline"></i>
             </div>
@@ -40,7 +39,7 @@
         </el-popover>
         <span v-else>暂无图片</span>
       </el-table-column>
-      <el-table-column prop="itime" label="添加时间"></el-table-column>
+      <el-table-column prop="itime" label="注册事件"></el-table-column>
       <el-table-column prop="utime" label="更新时间"></el-table-column>
       <el-table-column
         label="操作"
@@ -56,23 +55,48 @@
     <Pagination :total="10" />
 
     <el-dialog
-      :title="dialogStatus==='create' ? '添加类型':'修改类型'"
+      :title="dialogStatus==='create' ? '添加信息':'修改信息'"
       :visible.sync="dialogVisible"
       :close-on-click-modal="false"
       :center="true"
-      width="26%"
-      top="250px"
+      width="380px"
+      top="165px"
     >
       <el-form
         :model="form"
         ref="dataForm"
         :rules="rules"
         label-position="right"
-        label-width="120px"
-        :status-icon="true"
+        label-width="80px"
       >
-        <el-form-item label="类型名称" prop="name" style="width:80%">
-          <el-input v-model="form.name"></el-input>
+        <el-form-item label="备注" prop="remarks">
+          <el-input v-model="form.remarks" style="width:190px"></el-input>
+        </el-form-item>
+        <el-form-item label="图" prop="pic">
+            <el-image :src="form.pic" v-if="form.pic">
+                <div class="image-slot" slot="error">
+                    <i class="el-icon-picture-outline"></i>
+                </div>
+            </el-image>
+            <el-upload
+            class="avatar-uploader"
+            :show-file-list="false"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :before-upload="beforeAvatarUpload"
+            style="display:inline-block;margin:0;padding:0;"
+            >
+                <i class="el-icon-plus avatar-uploader-icon" style="display:inline-block;vertical-align:middle;line-height:100%;font-size:30px" />
+            </el-upload>
+            <span v-if="!form.pic">图片大小限制：640*410</span>
+        </el-form-item>
+        <el-form-item label="链接">
+            <el-input v-model="form.link" style="width:190px"></el-input>
+        </el-form-item>
+        <el-form-item label="协议(用于程序)">
+            <el-input v-model="form.agreement" style="width:190px"></el-input>
+        </el-form-item>
+        <el-form-item label="排序" prop="sort">
+            <el-input v-model="form.sort" type="number" style="width:190px"></el-input>
         </el-form-item>
       </el-form>
       <template v-slot:footer class="dialog-footer">
@@ -93,42 +117,44 @@ export default {
       list: [
         {
           id: 123456,
-          type: "攻略",
-          title: "1111",
+          remarks: "测试",
           pic: require("@/assets/logo.png"),
           itime: 456456431325,
           utime: 456123123121
         },
         {
           id: 123456,
-          type: "攻略",
+          remarks: "攻略",
           itime: 456456431325,
           utime: 456123123121,
           pic: require("@/assets/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png"),
-          title: "222"
         },
         {
           id: 123456,
-          type: "攻略",
+          remarks: "攻略",
           itime: 456456431325,
           utime: 456123123121,
           pic: "",
-          title: "222"
         },
         {
           id: 123456,
-          type: "攻略",
+          remarks: "攻略",
           itime: 456456431325,
           utime: 456123123121,
           pic: "",
-          title: "222"
         }
       ],
       form: {
-        name: ""
+        remarks:"",
+        pic:"",
+        link:"",
+        agreement:"",
+        sort:0
       },
       rules: {
-        name: { required: true, message: "请输入类型名称", trigger: "blur" }
+        remarks: { required: true, message: "请输入备注", trigger: "blur" },
+        pic:{required:true,message:"请添加图片"},
+        sort:{required:true,message:"请设置排序"}
       },
       tableKey: 0,
       listLoading: false,
@@ -155,7 +181,9 @@ export default {
     handleCreate() {
       this.dialogStatus = "create";
       this.dialogVisible = true;
-    }
+    },
+    //上传文件之前的钩子，参数为上传的文件，若返回 false 或者返回 Promise 且被 reject，则停止上传。
+    beforeAvatarUpload(){}
   }
 };
 </script>

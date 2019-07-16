@@ -1,4 +1,5 @@
 <template>
+
   <div class="nest-menu">
     <el-submenu index="1">
       <template slot="title">
@@ -32,11 +33,27 @@
         <el-menu-item index="1-4-4">标签</el-menu-item>
       </el-submenu>
     </el-submenu>
+
+
   </div>
 </template>
 
 <script>
 export default {
+  data(){
+    const A = 1
+    return {
+
+    }
+  },
+  computed:{
+    routes(){
+      return this.$router.options.routes;
+    }
+  },
+  AAA:{
+    a:1
+  },
   mounted() {
     // console.log(this.$route,"route")
     // console.log(this.$router,"router")
@@ -52,6 +69,8 @@ export default {
     // console.log(query,'query')
     // console.log(path,'path')
     // this.$router.replace({ path: '/' + path, query:query })
+    console.log(this.routes)
+    console.log(this.A)
   }
 };
 </script>

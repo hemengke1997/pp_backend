@@ -18,8 +18,10 @@ Vue.use(Cookies)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-new Vue({
+var vm = new Vue({
   el: '#app',
   router,
-  render: h=>h(App)
+  render: h=>h(App),
+
 })
+
