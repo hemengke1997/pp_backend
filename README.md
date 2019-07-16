@@ -33,15 +33,16 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 ---
 #### 对vue-Router的理解
-1.起步
-2.**嵌套路由**
-3.路由元信息
-4.路由懒加载
+1. 起步
+2. **嵌套路由**
+3. 路由元信息
+4. 路由懒加载
 ----
 **1.起步**
-    1.安装路由（用vue-cli会自动安装）
-    2.定义路由组件（也就是根据不同路由来显示的组件）
-    3.创建路由路由实例，通常在roter文件夹下的index.js中，代码如下：
+    1. 安装路由（用vue-cli会自动安装）
+    2. 定义路由组件（也就是根据不同路由来显示的组件）
+    3. 创建路由路由实例，通常在roter文件夹下的index.js中，代码如下：
+    4. 在main.js中引入router，并挂载到实例对象上
 ```javascript
 import Vue from 'vue'
 import Router from 'vue-router'
@@ -49,8 +50,6 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 import officeRouter  from './modules/office'
-
-
 
 export default new Router({
   routes:[
@@ -63,4 +62,3 @@ export default new Router({
   ]
 })
 ```
-    4.在main.js中引入router，并挂载到实例对象上
