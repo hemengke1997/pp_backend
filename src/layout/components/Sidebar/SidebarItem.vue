@@ -1,58 +1,87 @@
 <template>
 
-  <div class="nest-menu">
-    <el-submenu index="1">
-      <template slot="title">
-        <svg-icon class-name="dashboard-icon" icon-class="dashboard"></svg-icon>
-        <span>官网管理</span>
-      </template>
-      <el-submenu index="1-1">
-        <template slot="title">运营推荐</template>
-        <el-menu-item index="1-1-1">推荐分类</el-menu-item>
-        <el-menu-item index="1-1-2">推荐内容</el-menu-item>
-      </el-submenu>
-      <el-submenu index="1-2">
-        <template slot="title">公告新闻</template>
-        <el-menu-item index="1-2-1">新闻类型配置</el-menu-item>
-        <el-menu-item index="1-2-2">新闻内容</el-menu-item>
-        <el-menu-item index="1-2-3">公告内容</el-menu-item>
-        <el-menu-item index="1-2-4">banner内容</el-menu-item>
-      </el-submenu>
-      <el-submenu index="1-3">
-        <template slot="title">游戏攻略</template>
-        <el-menu-item index="1-3-1">攻略标签</el-menu-item>
-        <el-menu-item index="1-3-2">攻略内容</el-menu-item>
-        <el-menu-item index="1-3-3">图片相关</el-menu-item>
-        <el-menu-item index="1-3-4">视频相关</el-menu-item>
-      </el-submenu>
-      <el-submenu index="1-4">
-        <template slot="title">商品管理</template>
-        <el-menu-item index="1-4-1">分类</el-menu-item>
-        <el-menu-item index="1-4-2">道具</el-menu-item>
-        <el-menu-item index="1-4-3">角色</el-menu-item>
-        <el-menu-item index="1-4-4">标签</el-menu-item>
-      </el-submenu>
-    </el-submenu>
+  <div class="menu-wrapper">
+    <template v-if="!item.children">
+      <router-link :to="basePath">
+        <el-menu-item :index="basePath" :class="{'submenu-title-noDropdown':!isNest}">
+          <template slot="title">
+            <svg-icon v-if="item.meta.icon" :class-name="item.meta.icon+'-icon'" :icon-class="item.meta.icon"></svg-icon>
+            <span>{{item.meta.title}}</span>
+          </template>
+        </el-menu-item>
+      </router-link>
+    </template>
 
+    <el-submenu v-else :index="basePath">
+      <template slot="title">
+        <svg-icon v-if="item.meta.icon" :class-name="item.meta.icon+'-icon'" :icon-class="item.meta.icon" ></svg-icon>
+        <span>{{item.meta.title}}</span>
+      </template>
+      <sidebar-item 
+      v-for="child in item.children"
+      :key="child.path" 
+      :item="child"
+      :base-path="resolvePath(child.path)"
+      class="nest-menu"
+      :is-nest="true"
+      ></sidebar-item>
+    </el-submenu>
 
   </div>
 </template>
 
 <script>
+import path from 'path'
 export default {
+  name:'sidebar-item', //加了这个name才能在这个组件中调用自己这个组件
   data(){
-    const A = 1
     return {
 
     }
   },
-  computed:{
-    routes(){
-      return this.$router.options.routes;
+  props:{
+    item:{
+      type:Object,
+      required:true
+    },
+    basePath:{
+      type:String,
+      default:''
+    },
+    isNest: {
+      type: Boolean,
+      default: false
     }
   },
-  AAA:{
-    a:1
+  computed:{
+    
+    hasChildRoutes(){
+      const hasChildArr = []
+      this.$router.options.routes.forEach(el => {
+        if(el.children){
+          hasChildArr.push(el)
+        }
+      });
+      return hasChildArr
+    },
+    noChildRoutes() {
+      const noChildArr = []
+      this.$router.options.routes.forEach(el => {
+        if(!el.children){
+          noChildArr.push(el)
+        }
+      });
+      return noChildArr
+    },
+    
+  },
+  methods:{
+    getString(num) {
+      return num.toString()
+    },
+    resolvePath(routePath) {
+      return path.resolve(this.basePath,routePath)
+    }
   },
   mounted() {
     // console.log(this.$route,"route")
@@ -69,8 +98,7 @@ export default {
     // console.log(query,'query')
     // console.log(path,'path')
     // this.$router.replace({ path: '/' + path, query:query })
-    console.log(this.routes)
-    console.log(this.A)
+
   }
 };
 </script>

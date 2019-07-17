@@ -1,33 +1,78 @@
 <template>
   <div class="tags-view-container" id="tags-view-container">
     <scroll-pane ref="scrollPane" class="tags-view-wrapper">
-      <div class="tags-view-item active">
-        首页
-        <span class="el-icon-close" @click="closeTag"/>
-      </div>
+      <router-link
+      v-for="tag in visitedViews"
+      :key="tag.path"
+      :to='{path:tag.path,query:tag.query,fullPath:tag.fullPath}'
+      tag='span'
+      class="tags-view-item"
+      :class="isActive(tag)?'active':''"
+      >
+        {{tag.title}}
+        <span v-if="!tag.meta.affix" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
+      </router-link>
     </scroll-pane>
-    <ul v-show="visible" class="contextmenu">
-      <li>Refresh</li>
-      <li>Close</li>
-      <li>Close Others</li>
-      <li>Close All</li>
-    </ul>
+
   </div>
 </template>
 
 <script>
 import ScrollPane from "./ScrollPane";
+import {mapGetters} from 'vuex'
 export default {
   components: { ScrollPane },
   data() {
     return {
-      visible: false
+      top:0,
+      left:0,
+      selectedTag:{},
+      affixTags:{}
     };
   },
   methods:{
+    isActive(route) {
+      return route.path === this.$route.path
+    },
     closeTag() {
-      console.log(this.$refs)
+      
+    },
+    initTags() {
+      this.filterAffixTags(this.routes)
+      this.$store.dispatch('tagsView/addVisitedViews',this.affixTags)
+      this.addTags()
+    },
+    filterAffixTags(routes) {
+      routes.forEach(route=>{
+        if(route.path==='/'){
+          this.affixTags = route
+        }
+      })
+    },
+    addTags() {
+      const {meta} = this.$route
+      console.log(meta)
+    },
+    removeCurrentTag() {
+
     }
+  },
+  computed:{
+    ...mapGetters([
+      'visitedViews'
+    ]),
+    routes() {
+      return this.$router.options.routes
+    }
+  },
+  watch:{
+    routes() {
+      addTags()
+      removeCurrentTag()
+    }
+  },
+  mounted() {
+    this.initTags()
   }
 };
 </script>

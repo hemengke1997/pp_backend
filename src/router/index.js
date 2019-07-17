@@ -4,15 +4,16 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 import officeRouter  from './modules/office'
+import Layout from '@/layout'
 
 
-
-export  const router = new Router({
+export default new Router({
   routes:[
     {
       path:'/',
       name:'index',
-      meta:{title:'首页'}
+      meta:{title:'首页',icon:'dashboard',affix:true},
+      component:Layout
     },
     officeRouter,
   ]

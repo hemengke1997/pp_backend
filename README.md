@@ -62,3 +62,43 @@ export default new Router({
   ]
 })
 ```
+
+----
+#### path.resolve()的理解
+```javascript
+  path.resolve(___dirname,'dist')
+```
+官方解释
+> `path.resolve()` 方法会把一个路径或路径片段的序列解析为一个绝对路径。给定的路径的序列是从右往左被处理的，后面每个 path 被依次解析，直到构造完成一个绝对路径。 例如，给定的路径片段的序列为：/foo、/bar、baz，则调用 path.resolve('/foo', '/bar', 'baz') 会返回 /bar/baz。
+
+给的例子：
+```javascript
+  path.resolve('/foo/bar', './baz');
+// 返回: '/foo/bar/baz'
+
+path.resolve('/foo/bar', '/tmp/file/');
+// 返回: '/tmp/file'
+
+path.resolve('wwwroot', 'static_files/png/', '../gif/image.gif');
+// 如果当前工作目录为 /home/myself/node，
+// 则返回 '/home/myself/node/wwwroot/static_files/gif/image.gif'
+```
+path.resolve([…paths])里的每个参数都类似在当前目录执行一个cd操作，从左到右执行，返回的是最后的当前目录
+
+这样理解才能和文档对上号
+`path.resolve('/foo/bar','./baz');`相当于：
+```javascript
+cd /foo/bar //此时当前路径为 /foo/bar
+cd ./baz //此时路径为 /foo/bar/baz
+```
+`path.resolve('/foo/bar', '/tmp/file/');`相当于：
+```javascript
+cd /foo/bar //此时路径为 /foo/bar
+cd /tmp/file/ //此时路径为 /tmp/file
+```
+`path.resolve('wwwroot', 'static_files/png/', '../gif/image.gif');`// 如果当前工作目录为 /home/myself/node，相当于：
+```javascript 
+cd wwwroot //此时路径为/home/myself/node/wwwroot
+cd static_files/png/ //此时路径为/home/myself/node/wwwroot/static_files/png/
+cd ../gif/image.gif //这里用cd描述其实是不对的。。。。此时路径为/home/myself/node/wwwroot/static_files/gif/image.gif
+```
