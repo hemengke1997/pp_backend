@@ -1,13 +1,11 @@
 <template>
   <div class="app-wrapper">
     <sidebar class="sidebar-container"></sidebar>
-    <div class="main-container">
-      <div>
-        <navbar />
-        <tags-view v-if="1" />
-      </div>
-      <app-main />
+    <div class="main-container hasTagsView">
+      <navbar />
+      <tags-view />
     </div>
+    <app-main />
   </div>
 </template>
 

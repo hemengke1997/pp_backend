@@ -3,6 +3,11 @@
       <!--  transition mode有两个值 out-in  in-out  
             其中 out-in ：当前元素先进行过渡，完成后新元素过渡进入
             in-out: 新元素先进行过渡，完成之后当前元素过渡离开
+            router-view中绑定key的目的是 当key值变化时 routerview会更新 触发过渡
+
+            :key的应用场景：
+            1.完整的触发组件的钩子函数
+            2.触发过渡 transition
        -->
         <transition name="fade-transform" mode="out-in">
 
@@ -26,11 +31,6 @@ export default {
         return this.$route.fullPath
       }
     },
-    watch: {
-      cachedViews(){
-        console.log(this.cachedViews)
-      }
-    }
 }
 </script>
 
