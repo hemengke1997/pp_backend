@@ -91,7 +91,7 @@
 <script>
 import Pagination from "@/components/Pagination";
 export default {
-  name: "Content",
+  name: "goods-tags",
   components: { Pagination },
   data() {
     return {

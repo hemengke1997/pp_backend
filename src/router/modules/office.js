@@ -15,6 +15,7 @@ const officeRouter = {
             path:'recommend',
             component:()=> import('@/views/office/recommend/index'),
             redirect:'/office/recommend/type',
+            name:'recommend',
             meta:{
                 title:'运营推荐'
             },
@@ -22,6 +23,7 @@ const officeRouter = {
                 {
                     path:'type',
                     component:()=>import('@/views/office/recommend/type'),
+                    name:'recommend-type',
                     meta:{
                         title:"推荐分类"
                     }
@@ -29,6 +31,7 @@ const officeRouter = {
                 {
                     path:'content',
                     component:()=>import('@/views/office/recommend/content'),
+                    name:'recommend-content',
                     meta:{
                         title:'推荐内容'
                     }
@@ -41,25 +44,30 @@ const officeRouter = {
             component:()=>import('@/views/office/postnews/index'),
             redirect:'/office/postnews/type',
             meta:{title:'公告新闻'},
+            name:'postnews',
             children:[
                 {
                     path:'type',
                     component:()=>import('@/views/office/postnews/newstype'),
+                    name:'newstype',
                     meta:{title:'新闻类型配置'}
                 },
                 {
                     path:'newscontent',
                     component:()=>import('@/views/office/postnews/newscontent'),
+                    name:'newscontent',
                     meta:{title:'新闻内容'}
                 },
                 {
                     path:'postcontent',
                     component:()=>import('@/views/office/postnews/postcontent'),
+                    name:'postcontent',
                     meta:{title:'公告内容'},
                 },
                 {
                     path:'bannercontent',
                     component:()=>import('@/views/office/postnews/bannercontent'),
+                    name:'bannercontent',
                     meta:{title:'banner内容'}
                 }
             ]
@@ -70,30 +78,36 @@ const officeRouter = {
             component:()=>import('@/views/office/strategy/index'),
             redirect:'/office/strategy/type',
             meta:{title:'游戏攻略'},
+            name:'strategy',
             children:[
                 {
                     path:'type',
                     component:()=>import('@/views/office/strategy/type'),
+                    name:'strategy-type',
                     meta:{title:'攻略分类'}
                 },
                 {
                     path:'tags',
                     component:()=>import('@/views/office/strategy/tags'),
+                    name:'strategy-tags',
                     meta:{title:'攻略标签'}
                 },
                 {
                     path:'content',
                     component:()=>import('@/views/office/strategy/content'),
+                    name:'strategy-content',
                     meta:{title:'攻略内容'}
                 },
                 {
                     path:'picture',
                     component:()=>import('@/views/office/strategy/picture'),
+                    name:'strategy-picture',
                     meta:{title:'图片相关'}
                 },
                 {
                     path:'video',
                     component:()=>import('@/views/office/strategy/video'),
+                    name:'strategy-video',
                     meta:{title:'视频相关'}
                 }
             ]
@@ -104,25 +118,30 @@ const officeRouter = {
             component:()=>import('@/views/office/goods/index'),
             redirect:'/office/goods/tags',
             meta:{title:'商品管理'},
+            name:'goods',
             children:[
                 {
                     path:'tags',
                     component:()=>import('@/views/office/goods/tags'),
+                    name:'goods-tags',
                     meta:{title:'标签'},
                 },
                 {
                     path:'type',
                     component:()=>import('@/views/office/goods/type'),
+                    name:'goods-type',
                     meta:{title:'分类'}
                 },
                 {
                     path:'tools',
                     component:()=>import('@/views/office/goods/tools'),
+                    name:'goods-tools',
                     meta:{title:'道具'}
                 },
                 {
                     path:'role',
                     component:()=>import('@/views/office/goods/role'),
+                    name:'goods-role',
                     meta:{title:'角色'}
                 }
             ]

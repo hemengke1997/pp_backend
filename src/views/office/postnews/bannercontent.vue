@@ -110,7 +110,7 @@
 <script>
 import Pagination from "@/components/Pagination";
 export default {
-  name: "Content",
+  name: "bannercontent",
   components: { Pagination },
   data() {
     return {

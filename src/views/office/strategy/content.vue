@@ -138,7 +138,7 @@
 import Pagination from "@/components/Pagination";
 import Tinymce from "@/components/Tinymce";
 export default {
-  name: "Content",
+  name: "strategy-content",
   components: { Pagination, Tinymce },
   data() {
     return {

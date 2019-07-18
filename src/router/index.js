@@ -11,7 +11,7 @@ export default new Router({
   routes:[
     {
       path:'/',
-      name:'index',
+      name:'dashboard',
       meta:{title:'首页',icon:'dashboard',affix:true},
       component:Layout
     },

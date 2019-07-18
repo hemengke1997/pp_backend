@@ -2,77 +2,115 @@
   <div class="tags-view-container" id="tags-view-container">
     <scroll-pane ref="scrollPane" class="tags-view-wrapper">
       <router-link
-      v-for="tag in visitedViews"
-      :key="tag.path"
-      :to='{path:tag.path,query:tag.query,fullPath:tag.fullPath}'
-      tag='span'
-      class="tags-view-item"
-      :class="isActive(tag)?'active':''"
+        ref="tag"
+        v-for="tag in visitedViews"
+        :key="tag.path"
+        :to="{path:tag.path,query:tag.query,fullPath:tag.fullPath}"
+        tag="span"
+        class="tags-view-item"
+        :class="isActive(tag)?'active':''"
       >
         {{tag.title}}
-        <span v-if="!tag.meta.affix" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
+        <span
+          v-if="!tag.meta.affix"
+          class="el-icon-close"
+          @click.prevent.stop="closeSelectedTag(tag)"
+        />
       </router-link>
     </scroll-pane>
-
   </div>
 </template>
 
 <script>
 import ScrollPane from "./ScrollPane";
-import {mapGetters} from 'vuex'
+import { mapGetters } from "vuex";
 export default {
   components: { ScrollPane },
   data() {
     return {
-      top:0,
-      left:0,
-      selectedTag:{},
-      affixTags:{}
+      top: 0,
+      left: 0,
+      selectedTag: {},
+      affixTags: {}
     };
   },
-  methods:{
+  methods: {
     isActive(route) {
-      return route.path === this.$route.path
+      return route.path === this.$route.path;
     },
-    closeTag() {
-      
-    },
+    closeTag() {},
     initTags() {
-      this.filterAffixTags(this.routes)
-      this.$store.dispatch('tagsView/addVisitedViews',this.affixTags)
-      this.addTags()
+      this.filterAffixTags(this.routes);
+      this.$store.dispatch("tagsView/addVisitedView", this.affixTags);
     },
     filterAffixTags(routes) {
-      routes.forEach(route=>{
-        if(route.path==='/'){
-          this.affixTags = route
+      routes.forEach(route => {
+        if (route.path === "/") {
+          this.affixTags = route;
         }
-      })
+      });
     },
     addTags() {
-      const {meta} = this.$route
-      console.log(meta)
+      const { name } = this.$route;
+      if (name) {
+        this.$store.dispatch("tagsView/addView", this.$route)
+      }
+      return false;
+    },
+    closeSelectedTag(view) {
+      this.$store.dispatch('tagsView/delView',view)
+      if(this.isActive(view)) {
+        this.toLastView(this.visitedViews,view)
+      }
+    },
+    toLastView(visitedViews,view) {
+      const lastView = visitedViews.slice(-1)[0]
+      // 跳转到这个路由去
+      if(lastView) {
+        this.$router.push(lastView)
+      } else {
+        if(view.name==='首页') {
+          this.$router.replace({path:view.fullPath})
+        } else {
+          this.$router.push('/')
+        }
+      }
     },
     removeCurrentTag() {
+      const tags = this.$refs.tag;
+      this.$nextTick(() => {
+        for (const tag in tags) {
+          if (tag.to.path === this.$route.path) {
+            this.$refs.scrollPane.moveToTarget(tag)
 
+            if(tag.to.path!==this.$route.fullPath) {
+              this.$store.dispatch('tagsView/updateVisitedView',this.$route)
+            }
+            break
+          }
+        }
+      });
     }
   },
-  computed:{
-    ...mapGetters([
-      'visitedViews'
-    ]),
+  computed: {
+    ...mapGetters({
+      visitedViews:"tagsView/visitedViews"
+    }),
     routes() {
-      return this.$router.options.routes
+      return this.$router.options.routes;
+    },
+    route() {
+      return this.$route
     }
   },
-  watch:{
-    routes() {
-      addTags()
-      removeCurrentTag()
+  watch: {
+    route() {
+      this.addTags()
     }
   },
   mounted() {
     this.initTags()
+    this.addTags()
   }
 };
 </script>

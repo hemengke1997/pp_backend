@@ -81,7 +81,7 @@
 <script>
 import Pagination from "@/components/Pagination";
 export default {
-  name: "Content",
+  name: "strategy-type",
   components: { Pagination },
   data() {
     return {

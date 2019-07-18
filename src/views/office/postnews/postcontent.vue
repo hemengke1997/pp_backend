@@ -88,7 +88,7 @@
 <script>
 import Pagination from "@/components/Pagination";
 export default {
-  name: "Content",
+  name: "postcontent",
   components: { Pagination },
   data() {
     return {
