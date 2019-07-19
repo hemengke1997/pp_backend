@@ -87,6 +87,9 @@ export default {
     $route() {
       this.getBreadCrumbs()
     }
+  },
+  mounted() {
+    this.getBreadCrumbs()
   }
 };
 </script>

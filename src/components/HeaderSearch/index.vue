@@ -18,9 +18,7 @@
 </template>
 
 <script>
-// fuse is a lightweight fuzzy-search module
-// make search results more in line with expectations
-import Fuse from "fuse.js";
+
 import path from "path";
 import router from "@/router";
 
@@ -32,7 +30,7 @@ export default {
       searchPool: [],
       show: false,
       fuse: undefined,
-      options: []
+      options: [],
     };
   },
   methods: {
@@ -77,27 +75,15 @@ export default {
     },
     querySearch(query) {
       if (query !== "") {
-        this.options = this.fuse.search(query);
+        this.options = this.searchPool.filter(item=>{
+          let title = item.title.join('')
+          return title.indexOf(query) != -1
+        })
+        console.log(this.options)
+        console.log(this.searchPool,'111')
       } else {
         this.options = [];
       }
-    },
-    initFuse(list) {
-      this.fuse = new Fuse(list, {
-        shouldSort: true,
-        threshold: 0.4,
-        location: 0,
-        distance: 100,
-        maxPatternLength: 32,
-        minMatchCharLength: 1,
-        keys: [{
-          name: 'title',
-          weight: 0.7
-        }, {
-          name: 'path',
-          weight: 0.3
-        }]
-      })
     },
     change(val) {
       this.$router.push(val.path)
@@ -115,9 +101,6 @@ export default {
       } else {
         document.body.removeEventListener("click", this.close);
       }
-    },
-    searchPool(list) {
-      this.initFuse(list)
     },
     routes() {
       this.searchPool = this.generateRoutes(this.routes)
