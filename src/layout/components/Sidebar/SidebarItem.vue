@@ -12,7 +12,7 @@
       </router-link>
     </template>
 
-    <el-submenu v-else :index="basePath">
+    <el-submenu v-else :index="basePath" popper-append-to-body>
       <template slot="title">
         <svg-icon v-if="item.meta.icon" :class-name="item.meta.icon+'-icon'" :icon-class="item.meta.icon" ></svg-icon>
         <span>{{item.meta.title}}</span>
@@ -33,7 +33,7 @@
 <script>
 import path from 'path'
 export default {
-  name:'sidebar-item', //加了这个name才能在这个组件中调用自己这个组件
+  name:'sidebarItem', //加了这个name才能在这个组件中调用自己这个组件
   data(){
     return {
 
@@ -53,27 +53,7 @@ export default {
       default: false
     }
   },
-  computed:{
-    
-    hasChildRoutes(){
-      const hasChildArr = []
-      this.$router.options.routes.forEach(el => {
-        if(el.children){
-          hasChildArr.push(el)
-        }
-      });
-      return hasChildArr
-    },
-    noChildRoutes() {
-      const noChildArr = []
-      this.$router.options.routes.forEach(el => {
-        if(!el.children){
-          noChildArr.push(el)
-        }
-      });
-      return noChildArr
-    },
-    
+  computed:{    
   },
   methods:{
     getString(num) {

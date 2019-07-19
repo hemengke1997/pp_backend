@@ -4,8 +4,8 @@
     <div class="main-container hasTagsView">
       <navbar />
       <tags-view />
+      <app-main />
     </div>
-    <app-main />
   </div>
 </template>
 

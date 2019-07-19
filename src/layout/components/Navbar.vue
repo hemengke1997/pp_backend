@@ -18,8 +18,10 @@
     <div id="breadcrumb-container" class="breadcrumb-container">
       <el-breadcrumb class="app-breadcrumb" separator="/">
         <transition-group name="breadcrumb">
-          <el-breadcrumb-item :key="1">首页</el-breadcrumb-item>
-          <el-breadcrumb-item :key="2">官网管理</el-breadcrumb-item>
+          <el-breadcrumb-item v-for="item in breadcrumbItem" :key="item.path">
+            <span v-if="goToBread(item)">{{item.meta.title}}</span>
+            <router-link v-else :to="item.path">{{item.meta.title}}</router-link>
+          </el-breadcrumb-item>
         </transition-group>
       </el-breadcrumb>
     </div>
@@ -51,11 +53,40 @@ import Search from "@/components/HeaderSearch";
 export default {
   data() {
     return {
-      isActive: false
+      isActive: false,
+      breadcrumbItem: null
     };
   },
   components: {
     Search
+  },
+  methods:{
+    getBreadCrumbs() {
+      let matched = this.$route.matched.filter(item=>{
+        return item.meta && item.meta.title
+      })
+      const first = matched[0]
+      if(first.path) {
+        matched.unshift({
+          meta:{title:'首页'},
+          path:'/',
+          parent:undefined
+        })
+      }
+      this.breadcrumbItem = matched
+    },
+    goToBread(item) {
+      if(!item.parent&&item.path==='/') return false
+      return true
+    }
+  },
+  computed:{
+
+  },
+  watch: {
+    $route() {
+      this.getBreadCrumbs()
+    }
   }
 };
 </script>

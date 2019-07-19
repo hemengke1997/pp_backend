@@ -8,6 +8,7 @@
         :text-color="variables.menuText"
         :active-text-color="variables.menuActiveText"
         mode="vertical"
+        :default-active="activeMenu"
       >
         <sidebar-item v-for="item in allRoutes" :item="item" :key="item.path" :base-path="item.path"></sidebar-item>
       </el-menu>
@@ -21,6 +22,10 @@
 import variables from "@/styles/variables.scss";
 import SidebarItem from "./SidebarItem";
 export default {
+  data() {
+    return {
+    }
+  },
   components: { SidebarItem },
   computed: {
     variables() {
@@ -28,9 +33,13 @@ export default {
     },
     allRoutes() {
       return this.$router.options.routes;
+    },
+    activeMenu() {
+      return this.$route.path
     }
   },
-  methods: {}
+  methods: {},
+ 
 };
 </script>
 <style lang="scss" scoped>
